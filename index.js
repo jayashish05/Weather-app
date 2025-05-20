@@ -15,7 +15,8 @@ document.querySelector("#search-btn").addEventListener("click",async (event) => 
     if (cityname) {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${apikey}`);
             if(!response.ok){
-                console.error("City not found");
+                document.querySelector(".city").innerHTML = "City not found";
+                return;
             }
             const data = await response.json();
             console.log(data);
@@ -24,6 +25,7 @@ document.querySelector("#search-btn").addEventListener("click",async (event) => 
             document.querySelector(".feels-like").innerHTML= `${(data.main.feels_like - 273.15).toFixed(1)}°C`;
             document.querySelector(".wind-speed").innerHTML= `${(data.wind.speed).toFixed(2)} km/h`;
             document.querySelector(".humidity").innerHTML= `${(data.main.humidity)}%`;
+            document.querySelector(".weather-condition").innerHTML = `Weather Condition: ${data.weather[0].description}`
             const desc = `${(data.weather[0].main)}`;
             const icon = document.querySelector("#weather-icon");
             icon.className = "fa-solid fa-5x";
